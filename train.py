@@ -53,7 +53,7 @@ x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.1, random_state
 y_train
 
 run = Run.get_context()
-
+import joblib
 def main():
     # Add arguments to script
     parser = argparse.ArgumentParser()
@@ -67,7 +67,7 @@ def main():
     run.log("Max iterations:", np.int(args.max_iter))
 
     model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
-
+    joblib.dump(model,"log_model.pkl")
     accuracy = model.score(x_test, y_test)
     run.log("Accuracy", np.float(accuracy))
 
